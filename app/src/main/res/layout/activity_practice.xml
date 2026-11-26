@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.yogacoach.app.ui.OverlayView
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 상단 바 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="#99000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="6dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="◀ 목록"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnVoice"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="음성 켬"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnSwitch"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="카메라 전환"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- 기준 자세 미리보기 -->
+    <com.yogacoach.app.ui.PoseThumbView
+        android:id="@+id/thumb"
+        android:layout_width="84dp"
+        android:layout_height="110dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/thumb_dark_bg" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/status_bg"
+        android:gravity="center"
+        android:padding="14dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <!-- 하단 점수 패널 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#CC000000"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="종합 점수"
+                    android:textColor="#BBFFFFFF"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/totalScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@android:color/white"
+                    android:textSize="46sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="손"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbHand"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/score_bar" />
+
+                    <TextView
+                        android:id="@+id/txtHand"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="-"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="팔"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbArm"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/score_bar" />
+
+                    <TextView
+                        android:id="@+id/txtArm"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="-"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="다리"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbLeg"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/score_bar" />
+
+                    <TextView
+                        android:id="@+id/txtLeg"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="-"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:text="몸"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pbBody"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="10dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/score_bar" />
+
+                    <TextView
+                        android:id="@+id/txtBody"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="-"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/hold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="#FFE082"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="문제점"
+            android:textColor="#FF8A80"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/problems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="자세를 인식하면 표시됩니다"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="개선 방법"
+            android:textColor="#B9F6CA"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fixes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+    </LinearLayout>
+</FrameLayout>
