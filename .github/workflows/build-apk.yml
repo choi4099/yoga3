@@ -1,0 +1,34 @@
+name: Build APK
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: android-actions/setup-android@v3
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon testDebugUnitTest assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk Yoga.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Yoga-apk
+          path: Yoga.apk
+      - name: Publish download link (Release)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v1.2-build${{ github.run_number }}"
+          gh release create "$TAG" Yoga.apk --title "Yoga $TAG" --notes "Download Yoga.apk and install" --latest
